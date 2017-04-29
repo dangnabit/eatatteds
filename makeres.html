@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Eat at Teds.</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="http://bootswatch.com/united/bootstrap.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="navbar-header navbar-primary">
+      <a class="navbar-brand" href="/"><span class='glyphicon glyphicon-fire'></span> Eat at TEDs <span class='glyphicon glyphicon-fire'></span></a>
+    </div>
+    <div class="jumbotron text-center">
+      <h1><span class='glyphicon glyphicon-fire'></span> Eat at TEDs <span class='glyphicon glyphicon-fire'></span></h1>
+      <h3>The greatest restaurant in the galaxy for down home BBQ eats. Book your seat before they're gone. We only have 5 tables...</h3>
+      <hr>
+      <a href="/">
+        <button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-home"></span> Home</button>
+      </a>
+      <a href="/viewtables">
+        <button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-globe"></span> View All Tables!</button>
+      </a>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default halfOpac">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Gimme your info.</strong></h3>
+          </div>
+          <div class="panel-body ">
+            <form method="POST" role="form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name">
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email">
+              </div>
+              <div class="form-group">
+                <label for="resSize">Reservation Size</label>
+                <input type="text" class="form-control" id="resSize">
+              </div>
+              <div class="form-group">
+                <label for="uniqueID">Unique ID</label>
+                <input type="text" class="form-control" id="uniqueID">
+              </div>
+              <br>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary btn-md" id="add-btn">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img id='jumboFire' src="/images/fire.gif" alt="It's a fire.">
+  </div>
+  <div class="push"></div>
+  <div class="footer navbar navbar-default navbar-fixed-bottom align-middle text-default text-center text-muted">
+    <p>&copy; Copyright 2017 TED Enterprises</p>
+    <p><a href="/api/">API Table Link</a> <span> | </span>
+      <a href="/api/waitlist">API Wait List</a>
+    </p>
+  </div>
+  <script type="text/javascript">
+  // Question: What does this code do?
+  $("#add-btn").on("click", function(event) {
+    event.preventDefault();
+
+
+
+
+    var newTable = {
+      name: $("#name").val().trim(),
+      phoneNumber: $("#phoneNumber").val().trim(),
+      email: $("#email").val().trim(),
+      resSize: $("#resSize").val().trim(),
+      uniqueID: $("#uniqueID").val().trim()
+    };
+
+    // Question: What does this code do??
+    $.post("/api/new", newTable)
+      .done(function(data) {
+        console.log(data);
+        if (data.waitList) {
+          alert('No tables available. Added to waitlist.');
+        } else {
+
+          alert('You lucky bastard, you got a seat at TEDs.');
+        }
+
+      });
+    $("#name").val('');
+    $("#phoneNumber").val('');
+    $("#email").val('');
+    $("#resSize").val('');
+    $("#uniqueID").val('');
+
+  });
+  </script>
+</body>
+
+</html>
