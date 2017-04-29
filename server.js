@@ -42,20 +42,6 @@ app.get("/viewtables", function(req, res) {
     res.sendFile(path.join(__dirname, "viewtables.html"));
 });
 
-
-app.get("/api/:table?", function(req, res) {
-    var chosen = req.params.table;
-
-    if (chosen === 'waitlist') {
-        return res.json(tables.slice(5));
-    } else if (chosen === 'clear') {
-        tables = [];
-        res.sendFile(path.join(__dirname, "viewtables.html"));
-    } else {
-        return res.json(tables);
-    }
-});
-
 app.get("/api/:table?", function(req, res) {
     var chosen = req.params.table;
 
@@ -63,7 +49,6 @@ app.get("/api/:table?", function(req, res) {
         return res.json(waitList);
     } else if (chosen === 'clear') {
         tables = [];
-        waitlist = [];
         res.sendFile(path.join(__dirname, "viewtables.html"));
     } else {
         return res.json(tables);
